@@ -76,11 +76,12 @@ class MainActivity : AppCompatActivity() {
         if (tippeltBetuk.indexOf(aktualisSzo[0]) != -1) {
             kiad = aktualisSzo[0].toString()
         }
-        for (i in 1..aktualisSzo.length - 1) {
-            if (tippeltBetuk.indexOf(aktualisSzo[i]) != -1) {
-                kiad += " " + aktualisSzo[i]
+        val hatar = aktualisSzo.length - 1
+        for (i in 1..hatar) {
+            kiad += if (tippeltBetuk.indexOf(aktualisSzo[i]) != -1) {
+                " " + aktualisSzo[i]
             } else {
-                kiad += " _"
+                " _"
             }
         }
         return kiad
@@ -108,7 +109,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun szoRandom(): String {
-        return list.get(Random.nextInt(list.size - 1))
+        return list[Random.nextInt(list.size - 1)]
     }
 
     private fun betuNovel() {
@@ -151,7 +152,8 @@ class MainActivity : AppCompatActivity() {
 
     fun kitalalva(): Boolean {
         var jo = true
-        for (i in 0..aktualisSzo.length - 1) {
+        val hatar = aktualisSzo.length - 1
+        for (i in 0..hatar) {
             if (tippeltBetuk.indexOf(aktualisSzo[i]) == -1) {
                 jo = false
             }
