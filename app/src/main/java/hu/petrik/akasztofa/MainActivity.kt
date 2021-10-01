@@ -2,12 +2,15 @@ package hu.petrik.akasztofa
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import java.util.Observable
 import androidx.databinding.DataBindingUtil
 import hu.petrik.akasztofa.databinding.ActivityMainBinding
 import java.io.File
+import java.io.IOException
 import java.nio.charset.Charset
 import kotlin.random.Random
 
@@ -19,9 +22,14 @@ class MainActivity : AppCompatActivity() {
     private val betuk: CharArray = "aábcdeéfghiíjklmnoóöőpqrstuúüűvwxyz".toCharArray()
 
     private fun init() {
-        list = File("szavak.txt").inputStream().readBytes()
+        try{
+            list = File("assets/szavak.txt").inputStream().readBytes()
                 .toString(Charsets.UTF_16).split("\n")
-        bind.textViewSzo.text = szoRandom()
+            bind.textViewSzo.text = szoRandom()
+        }catch (e : IOException){
+            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            Log.d("Hiba",e.message.toString())
+        }
     }
 
     private fun szoRandom():String{
