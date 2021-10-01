@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         alert.setNegativeButton("nem") { _, _ ->
             exitProcess(0)
         }
-        alert.setOnDismissListener() {
+        alert.setOnDismissListener {
             init()
         }
         alert.show()
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getBetu(): Char {
-        return tippelhetoBetuk[index];
+        return tippelhetoBetuk[index]
     }
 
     fun betuElvesz(betu: Char) {
@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity() {
             betuallit()
             true
         }
-        bind.buttonTippel.setOnClickListener() {
+        bind.buttonTippel.setOnClickListener {
             tippel()
         }
     }
