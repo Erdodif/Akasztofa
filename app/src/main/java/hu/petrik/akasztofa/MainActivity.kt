@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import hu.petrik.akasztofa.databinding.ActivityMainBinding
 import java.io.File
 import java.nio.charset.Charset
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     lateinit var bind: ActivityMainBinding
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         list = File("szavak.txt").inputStream().readBytes()
                 .toString(Charsets.UTF_16).split("\n")
+        bind.textViewSzo.text = szoRandom()
+    }
+
+    private fun szoRandom():String{
+        return list.get(Random.nextInt(list.size-1))
     }
 
     private fun betuNovel() {
