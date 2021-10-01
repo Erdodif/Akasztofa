@@ -29,7 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/kezdo"
-                android:textSize="30sp"/>
+                android:textSize="30sp"
+                android:textAlignment="center"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonPlusz"
                 android:layout_width="50sp"
@@ -50,7 +51,7 @@
             android:id="@+id/imageViewKep"
             android:layout_width="wrap_content"
             android:layout_height="400dp"
-            android:src="@drawable/akasztofa01"
+            android:src="@drawable/akasztofa00"
             android:contentDescription="@string/allas" />
 
         <HorizontalScrollView
