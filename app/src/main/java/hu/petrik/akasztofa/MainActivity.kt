@@ -10,13 +10,15 @@ import android.widget.Toast
 import java.io.IOException
 import android.os.Bundle
 import android.util.Log
+import kotlinx.coroutines.CoroutineStart
 
 class MainActivity : AppCompatActivity() {
     lateinit var bind: ActivityMainBinding
     lateinit var list: List<String>
 
     private val betuk: String = "aábcdeéfghiíjklmnoóöőpqrstuúüűvwxyz".uppercase()
-    private var tippelhetoBetuk:CharArray = betuk.toCharArray()
+    private var tippelhetoBetuk = ""
+    private var neelenorizz = false
     private var tippeltBetuk = ""
     private var aktualisSzo = ""
     private var index = 0
@@ -33,19 +35,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        neelenorizz = true
         index = 0
         allas = 0
         aktualisSzo = ""
+        tippelhetoBetuk = betuk
         tippeltBetuk = ""
-        tippelhetoBetuk = betuk.toCharArray()
+        betuallit()
         try {
             list = assets.open("szavak.txt").bufferedReader(Charsets.UTF_8).readLines()
             aktualisSzo = szoRandom().uppercase()
             bind.textViewSzo.text = getAktualisSzoUres()
+            Log.d("Szó", aktualisSzo)
+            Log.d("Tippelhető betük", tippelhetoBetuk.toString())
+            Log.d("Betük", betuk.toString())
         } catch (e: IOException) {
             Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
             Log.d("Hiba", e.message.toString())
         }
+        bind.imageViewKep.setImageResource(R.drawable.akasztofa00)
+        neelenorizz = false
+    }
+
+    fun vege(gyozelem: Boolean) {
+        val alert = AlertDialog.Builder(this)
+        alert.setTitle("Nem sikerült kitalálni!")
+        alert.setMessage("Szeretnél még egyet játszani?")
+        if (gyozelem) {
+            alert.setTitle("Helyes megfejtés!")
+            alert.setMessage("Szeretnél még egyet játszani?")
+        }
+        alert.setPositiveButton("igen") { _, _ ->
+            init()
+        }
+        alert.setNegativeButton("nem") { _, _ ->
+            exitProcess(0)
+        }
+        alert.setOnDismissListener(){
+            init()
+        }
+        alert.show()
     }
 
     private fun allasKovetes() {
@@ -64,17 +93,7 @@ class MainActivity : AppCompatActivity() {
             10 -> melyik = R.drawable.akasztofa10
             11 -> melyik = R.drawable.akasztofa11
             12 -> melyik = R.drawable.akasztofa12
-            13 -> {
-                val alert = AlertDialog.Builder(this)
-                alert.setTitle("Nem sikerült kitalálni!")
-                alert.setMessage("Szeretnél még egyet játszani?")
-                alert.setPositiveButton("igen"){_,_->
-                    init()
-                }
-                alert.setNegativeButton("nem"){_,_->
-                    exitProcess(0)
-                }
-            }
+            13 -> vege(false)
         }
         bind.imageViewKep.setImageResource(melyik)
     }
@@ -85,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun betuNovel() {
         index++
-        if (index == tippelhetoBetuk.size) {
+        if (index == tippelhetoBetuk.length) {
             index = 0
         }
         betuallit()
@@ -94,13 +113,14 @@ class MainActivity : AppCompatActivity() {
     private fun betuCsokkent() {
         index--
         if (index < 0) {
-            index = tippelhetoBetuk.size - 1
+            index = tippelhetoBetuk.length - 1
         }
         betuallit()
     }
 
     private fun betuallit() {
-        bind.textViewBetu.text = tippeltBetuk.get(index).toString()
+        bind.textViewBetu.text = tippelhetoBetuk[index].toString()
+        Log.d("Jelenlegi betü", tippelhetoBetuk[index].toString())
     }
 
     fun getBetu(): Char {
@@ -108,29 +128,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun betuKeres(betu: Char): Boolean {
-        var talalat = false
+        return aktualisSzo.indexOf(betu) != -1
+    }
+
+    fun kitalalva(): Boolean {
+        var jo = true
         var i = 0
-        while (i < aktualisSzo.length && aktualisSzo.get(i) == betu) {
+        while (i < aktualisSzo.length && tippeltBetuk.indexOf(aktualisSzo[i])!=-1){
             i++
         }
-        if (i < aktualisSzo.length) {
-            talalat = true
+        if (i < tippeltBetuk.length){
+            jo = false
         }
-        return talalat
+        return jo
     }
 
     fun betuElvesz(betu: Char) {
-        tippelhetoBetuk = tippelhetoBetuk.toString()
-            .replace(betu.toString(),"").toCharArray()
+        if(neelenorizz){
+            return
+        }
+        tippelhetoBetuk = tippelhetoBetuk.replace(betu.toString(), "")
+        betuallit()
+        tippeltBetuk += betu
+        Log.d("Elvett Betü",tippeltBetuk)
     }
 
     private fun tippel() {
-        if(betuKeres(getBetu())){
+        if (betuKeres(getBetu())) {
             Toast.makeText(this, "'${getBetu()}' volt benne", Toast.LENGTH_SHORT).show()
             betuElvesz(getBetu())
-        }
-        else{
-            allas--
+            if (kitalalva()){
+                vege(true)
+            }
+        } else {
+            allas++
             allasKovetes()
             Toast.makeText(this, "'${getBetu()}' nem volt benne", Toast.LENGTH_SHORT).show()
             betuElvesz(getBetu())
