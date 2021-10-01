@@ -71,10 +71,25 @@ class MainActivity : AppCompatActivity() {
         alert.setNegativeButton("nem") { _, _ ->
             exitProcess(0)
         }
-        alert.setOnDismissListener(){
+        alert.setOnDismissListener() {
             init()
         }
         alert.show()
+    }
+
+    private fun getAktualisSzoHelyzet(): String {
+        var kiad = "_"
+        if (tippeltBetuk.indexOf(aktualisSzo[0]) != -1) {
+            kiad = aktualisSzo[0].toString()
+        }
+        for (i in 1..aktualisSzo.length - 1) {
+            if (tippeltBetuk.indexOf(aktualisSzo[i]) != -1) {
+                kiad += " " + aktualisSzo[i]
+            } else {
+                kiad += " _"
+            }
+        }
+        return kiad
     }
 
     private fun allasKovetes() {
@@ -127,38 +142,39 @@ class MainActivity : AppCompatActivity() {
         return tippelhetoBetuk[index];
     }
 
+    fun betuElvesz(betu: Char) {
+        if (neelenorizz) {
+            return
+        }
+        tippelhetoBetuk = tippelhetoBetuk.replace(betu.toString(), "")
+        betuallit()
+        tippeltBetuk += betu
+        Log.d("Elvett Betü", tippeltBetuk)
+    }
+
     fun betuKeres(betu: Char): Boolean {
         return aktualisSzo.indexOf(betu) != -1
     }
 
     fun kitalalva(): Boolean {
         var jo = true
-        var i = 0
-        while (i < aktualisSzo.length && tippeltBetuk.indexOf(aktualisSzo[i])!=-1){
-            i++
-        }
-        if (i < tippeltBetuk.length){
-            jo = false
+        for (i in 0..aktualisSzo.length - 1) {
+            if (tippeltBetuk.indexOf(aktualisSzo[i]) == -1) {
+                jo = false
+            }
         }
         return jo
-    }
-
-    fun betuElvesz(betu: Char) {
-        if(neelenorizz){
-            return
-        }
-        tippelhetoBetuk = tippelhetoBetuk.replace(betu.toString(), "")
-        betuallit()
-        tippeltBetuk += betu
-        Log.d("Elvett Betü",tippeltBetuk)
     }
 
     private fun tippel() {
         if (betuKeres(getBetu())) {
             Toast.makeText(this, "'${getBetu()}' volt benne", Toast.LENGTH_SHORT).show()
             betuElvesz(getBetu())
-            if (kitalalva()){
+            if (kitalalva()) {
+                bind.textViewSzo.text = getAktualisSzoHelyzet()
                 vege(true)
+            } else {
+                bind.textViewSzo.text = getAktualisSzoHelyzet()
             }
         } else {
             allas++
