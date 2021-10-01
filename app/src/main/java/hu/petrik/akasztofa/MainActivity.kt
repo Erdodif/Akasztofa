@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     private val betuk: String = "aábcdeéfghiíjklmnoóöőpqrstuúüűvwxyz".uppercase()
     private var tippelhetoBetuk:CharArray = betuk.toCharArray()
-    private var aktualisSzo = ""
     private var tippeltBetuk = ""
+    private var aktualisSzo = ""
     private var index = 0
     private var allas = 0
 
