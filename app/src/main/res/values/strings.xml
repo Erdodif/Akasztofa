@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Akasztofa</string>
+    <string name="minusz">-</string>
+    <string name="plusz">+</string>
+    <string name="kezdo">A</string>
+    <string name="tippel">Tippel</string>
+    <string name="allas">Allas</string>
+</resources>
