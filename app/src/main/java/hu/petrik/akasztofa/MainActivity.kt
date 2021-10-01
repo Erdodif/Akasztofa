@@ -177,10 +177,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        init()
+    private fun gombFigyeles(){
         bind.buttonMinusz.setOnClickListener {
             betuCsokkent()
         }
@@ -196,4 +193,35 @@ class MainActivity : AppCompatActivity() {
             tippel()
         }
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        if (savedInstanceState == null){
+            init()
+        }
+        else{
+            neelenorizz = true
+            tippeltBetuk = savedInstanceState.getString("tippeltBetuk").toString()
+            tippelhetoBetuk = savedInstanceState.getString("tippelhetoBetuk").toString()
+            aktualisSzo = savedInstanceState.getString("aktualisSzo").toString()
+            allas = savedInstanceState.getInt("allas")
+            index = savedInstanceState.getInt("index")
+            allasKovetes()
+            betuallit()
+            bind.textViewSzo.text = getAktualisSzoHelyzet()
+            neelenorizz = false
+        }
+        gombFigyeles()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("tippeltBetuk",tippeltBetuk)
+        outState.putString("tippelhetoBetuk",tippelhetoBetuk)
+        outState.putString("aktualisSzo",aktualisSzo)
+        outState.putInt("allas",allas)
+        outState.putInt("index",index)
+    }
+
 }

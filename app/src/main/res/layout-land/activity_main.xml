@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:background="@color/hatter">
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="fill">
+
+        <ImageView
+            android:id="@+id/imageViewKep"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:src="@drawable/akasztofa00"
+            android:contentDescription="@string/allas" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonMinusz"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:background="@drawable/buttonbackround"
+                    android:textSize="30sp"
+                    android:text="@string/minusz"/>
+                <TextView
+                    android:id="@+id/textViewBetu"
+                    android:layout_margin="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kezdo"
+                    android:textSize="30sp"
+                    android:textAlignment="center"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonPlusz"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:background="@drawable/buttonbackround"
+                    android:textSize="20sp"
+                    android:text="@string/plusz"/>
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonTippel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tippel"
+                android:layout_gravity="center"/>
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom">
+
+                <TextView
+                    android:id="@+id/textViewSzo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="40sp"/>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
