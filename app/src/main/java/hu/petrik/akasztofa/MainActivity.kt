@@ -9,8 +9,6 @@ import kotlin.random.Random
 import android.widget.Toast
 import java.io.IOException
 import android.os.Bundle
-import android.util.Log
-import kotlinx.coroutines.CoroutineStart
 
 class MainActivity : AppCompatActivity() {
     lateinit var bind: ActivityMainBinding
@@ -46,12 +44,8 @@ class MainActivity : AppCompatActivity() {
             list = assets.open("szavak.txt").bufferedReader(Charsets.UTF_8).readLines()
             aktualisSzo = szoRandom().uppercase()
             bind.textViewSzo.text = getAktualisSzoUres()
-            Log.d("Szó", aktualisSzo)
-            Log.d("Tippelhető betük", tippelhetoBetuk.toString())
-            Log.d("Betük", betuk.toString())
         } catch (e: IOException) {
             Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-            Log.d("Hiba", e.message.toString())
         }
         bind.imageViewKep.setImageResource(R.drawable.akasztofa00)
         neelenorizz = false
@@ -135,7 +129,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun betuallit() {
         bind.textViewBetu.text = tippelhetoBetuk[index].toString()
-        Log.d("Jelenlegi betü", tippelhetoBetuk[index].toString())
     }
 
     fun getBetu(): Char {
@@ -147,9 +140,9 @@ class MainActivity : AppCompatActivity() {
             return
         }
         tippelhetoBetuk = tippelhetoBetuk.replace(betu.toString(), "")
-        betuallit()
+        betuNovel()
+        betuCsokkent()
         tippeltBetuk += betu
-        Log.d("Elvett Betü", tippeltBetuk)
     }
 
     fun betuKeres(betu: Char): Boolean {
