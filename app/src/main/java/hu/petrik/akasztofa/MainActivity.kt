@@ -3,23 +3,24 @@ package hu.petrik.akasztofa
 import hu.petrik.akasztofa.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AlertDialog
+import kotlin.system.exitProcess
 import kotlin.random.Random
 import android.widget.Toast
 import java.io.IOException
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
-import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     lateinit var bind: ActivityMainBinding
     lateinit var list: List<String>
-    private var index = 0
+
     private val betuk: String = "aábcdeéfghiíjklmnoóöőpqrstuúüűvwxyz".uppercase()
-    private var allas = 0
+    private var tippelhetoBetuk:CharArray = betuk.toCharArray()
     private var aktualisSzo = ""
     private var tippeltBetuk = ""
-    private var tippelhetoBetuk:CharArray = betuk.toCharArray()
+    private var index = 0
+    private var allas = 0
 
     private fun getAktualisSzoUres(): String {
         val hatar = aktualisSzo.length - 2
@@ -64,9 +65,9 @@ class MainActivity : AppCompatActivity() {
             11 -> melyik = R.drawable.akasztofa11
             12 -> melyik = R.drawable.akasztofa12
             13 -> {
-                var alert = AlertDialog.Builder(this)
-                alert.setTitle("Vereség")
-                alert.setMessage("Veszített, szeretné újból megpróbálni?")
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("Nem sikerült kitalálni!")
+                alert.setMessage("Szeretnél még egyet játszani?")
                 alert.setPositiveButton("igen"){_,_->
                     init()
                 }
