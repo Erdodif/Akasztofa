@@ -140,8 +140,8 @@ class MainActivity : AppCompatActivity() {
             return
         }
         tippelhetoBetuk = tippelhetoBetuk.replace(betu.toString(), "")
-        betuNovel()
         betuCsokkent()
+        betuNovel()
         tippeltBetuk += betu
     }
 
