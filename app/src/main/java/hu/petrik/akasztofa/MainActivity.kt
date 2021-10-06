@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     fun vege(gyozelem: Boolean) {
         val alert = AlertDialog.Builder(this)
         alert.setTitle("Nem sikerült kitalálni!")
-        alert.setMessage("Szeretnél még egyet játszani?")
+        alert.setMessage("A megoldás '${aktualisSzo.lowercase()}' volt.\nSzeretnél még egyet játszani?")
         if (gyozelem) {
             alert.setTitle("Helyes megfejtés!")
             alert.setMessage("Szeretnél még egyet játszani?")
